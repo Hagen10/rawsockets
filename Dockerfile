@@ -4,7 +4,8 @@ FROM alpine:latest
 RUN apk add --no-cache \
     build-base \
     gcc \
-    libc-dev
+    libc-dev \
+    htop
 
 # Set working directory
 WORKDIR /app

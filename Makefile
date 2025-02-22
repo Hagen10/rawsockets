@@ -11,3 +11,12 @@ run: build
 stop:
 	docker stop rawsockets
 	docker rm rawsockets
+	docker rmi rawsockets
+
+.PHONY: sh
+sh:
+	docker exec -it rawsockets sh
+
+.PHONY: logs
+logs:
+	docker logs -f rawsockets
