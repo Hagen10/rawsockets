@@ -20,11 +20,12 @@ defmodule CustomProtocolSender do
 
     packet = ip_header <> custom_header <> payload
 
-    # :socket.sendto(sock, @dest_ip, @dest_port, packet)
-
     :socket.sendto(sock, packet, @sock_addr)
 
-    IO.puts("Custom protocol packet sent! with custom_header: #{inspect(Base.encode16(custom_header))}")
+    IO.puts("Custom protocol packet sent!")
+    IO.puts("IP Header: #{inspect(Base.encode16(ip_header))}")
+    IO.puts("custom_header: #{inspect(Base.encode16(custom_header))}")
+    IO.puts("payload: #{inspect(Base.encode16(payload))}")
 
     :socket.close(sock)
   end
