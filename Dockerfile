@@ -1,20 +1,22 @@
-FROM alpine:latest
+# Use the official Elixir image
+FROM elixir:latest
 
-# Install necessary packages
-RUN apk add --no-cache \
-    build-base \
-    gcc \
-    libc-dev \
-    htop
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    iproute2 \
+    net-tools \
+    tcpdump \
+    nmap \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy the C source file into the container
-COPY program.c /app/
+# Copy the Elixir script
+COPY raw_socket.exs raw_socket.exs
 
-# Compile the C program
-RUN gcc -o program program.c
+# Set the network interface name (default: eth0)
+ENV NETWORK_INTERFACE=eth0
 
-# Set the default command to run the compiled executable
-CMD ["/app/program"]
+# Run the script
+CMD elixir raw_socket.exs

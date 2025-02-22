@@ -1,11 +1,17 @@
-
 .PHONY: build
 build:
-	docker build --progress=plain -f Dockerfile . -t rawsockets
+	docker build -f Dockerfile . -t rawsockets
 
 .PHONY: run
 run: build
-	docker run -d --privileged --name rawsockets rawsockets
+	docker run \
+		--rm \
+		--privileged \
+		--mount type=bind,src=/tmp,dst=/app/files \
+		-P \
+		--cap-add=NET_RAW \
+		--cap-add=NET_ADMIN \
+		--name rawsockets rawsockets
 
 .PHONY: stop
 stop:
