@@ -5,7 +5,7 @@ build:
 .PHONY: run
 run: build
 	docker run \
-		--rm \
+		-d \
 		--privileged \
 		--mount type=bind,src=/tmp,dst=/app/files \
 		-P \
